@@ -51,8 +51,15 @@ int main(int argc, char **argv)
 						event.peer -> data,
 						event.channelID);
 
-				/* Clean up the packet now that we're done using it. */
-				enet_packet_destroy (event.packet);
+				for(int i=0;i<server->peerCount;i++)
+				{
+					if(&server->peers[i] != event.peer)
+					{
+						enet_peer_send(&server->peers[i],0,event.packet);
+						enet_host_flush(server);
+					}
+				}
+
 				break;
 	   
 			case ENET_EVENT_TYPE_DISCONNECT:
