@@ -55,7 +55,7 @@ int main(int argc, char **argv){
 				break;
 	   
 			case ENET_EVENT_TYPE_DISCONNECT:
-				printf ("%s disconected.\n", event.peer -> data);
+				cout << event.peer->data << " disconnected" << endl;
 				handlePacket("logout",event.peer);
 			}
 		}
