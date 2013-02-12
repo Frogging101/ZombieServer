@@ -10,7 +10,8 @@ using namespace std;
 
 void handlePacket(string packetData, ENetPeer *peer);
 int peerToId(ENetPeer *peer);
-Player players[MAXPLAYERS];
+Player *players = new Player[MAXPLAYERS];
+ENetHost *server;
 
 enum{
 	pLogin,
@@ -20,7 +21,6 @@ enum{
 
 int main(int argc, char **argv){
 	ENetAddress address;
-	ENetHost *server;
 
 	if (enet_initialize () != 0)
 	{
@@ -60,6 +60,7 @@ int main(int argc, char **argv){
 			}
 		}
 	}
+	delete[] players;
 }
 
 int enumPacketType(string text){ //text is the packet type text{
