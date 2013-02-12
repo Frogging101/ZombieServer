@@ -10,6 +10,7 @@ using namespace std;
 
 void handlePacket(string packetData, ENetPeer *peer);
 int peerToId(ENetPeer *peer);
+Player players[MAXPLAYERS];
 
 enum{
 	pLogin,
