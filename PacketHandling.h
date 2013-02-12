@@ -3,7 +3,7 @@
 
 #include "Player.h"
 
-Player *login(Player players[]);
+void login(Player players[],ENetPeer peer);
 void logout(Player players);
 void move();
 

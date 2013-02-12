@@ -1,6 +1,8 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include "enet\enet.h"
+
 class Player
 {
 public:
@@ -9,8 +11,9 @@ public:
 	float z;
 	float yaw;
 	int id;
+	ENetPeer peer;
 
-	Player::Player(float x, float y, float z, int id);
+	Player::Player(float x, float y, float z, int id, ENetPeer peer);
 	Player::Player();
 };
 

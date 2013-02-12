@@ -1,5 +1,3 @@
-#define WIN32
-
 #include <enet/enet.h>
 #include <iostream>
 #include <sstream>
@@ -10,7 +8,7 @@
 using namespace std;
 
 Player players[64];
-void handlePacket(string packetData);
+void handlePacket(string packetData, ENetPeer peer);
 
 enum{
 	pLogin,
@@ -48,16 +46,15 @@ int main(int argc, char **argv){
 			switch (event.type)
 			{
 			case ENET_EVENT_TYPE_CONNECT:
-				handlePacket("login");
+				handlePacket("login",*event.peer);
 				break;
 			case ENET_EVENT_TYPE_RECEIVE:
-				handlePacket((char*)event.packet->data);
+				handlePacket((char*)event.packet->data,*event.peer);
 				break;
 	   
 			case ENET_EVENT_TYPE_DISCONNECT:
 				printf ("%s disconected.\n", event.peer -> data);
-				/* Reset the peer's client information. */
-				event.peer -> data = NULL;
+				handlePacket("logout",*event.peer);
 			}
 		}
 	}
@@ -69,7 +66,7 @@ int enumPacketType(string text){ //text is the packet type text{
 	if(text == "move") return pMove;
 }
 
-void handlePacket(string packetData){
+void handlePacket(string packetData, ENetPeer peer){
 	stringstream ss;
 	string packetTypeStr;
 	int packetType;	
@@ -79,12 +76,10 @@ void handlePacket(string packetData){
 	
 	packetType = enumPacketType(packetTypeStr);
 
-	int debug;
 	switch(packetType){
 		case pLogin:
 			cout << "Login packet received" << endl;
-			login(players);
-			debug = 0;
+			login(players,peer);
 			break;
 
 		case pLogout:
