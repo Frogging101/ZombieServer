@@ -1,7 +1,11 @@
 #include <iostream>
+#include <sstream>
 
 #include "Player.h"
+#include "PacketHandling.h"
 #include "main.h"
+
+using namespace std;
 
 Player::Player(float x, float y, float z, int id, ENetPeer peer){
 	this->id = id;
@@ -18,8 +22,10 @@ void Player::movePlayer(float x, float y, float z){
 	this->x = x;
 	this->y = y;
 	this->z = z;
+	stringstream ss;
 
-	for(int i=0;i<MAXPLAYERS;i++){
-		//if(players[i].
-	}
+	ss << "move " << this->id << " " << x << 
+		" " << y << " " << z << " " << yaw;
+
+	broadcast(ss.str(),this->peer);
 }
