@@ -3,14 +3,15 @@
 
 class Player
 {
+public:
 	float x;
 	float y;
 	float z;
 	float yaw;
 	int id;
 
-public:
 	Player::Player(float x, float y, float z, int id);
+	Player::Player();
 };
 
 #endif

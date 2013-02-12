@@ -3,7 +3,7 @@
 
 #include "Player.h"
 
-Player* login(Player *players){return players;};
+Player *login(Player players[]);
 void logout(Player players);
 void move();
 

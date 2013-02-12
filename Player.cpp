@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "Player.h"
 
 Player::Player(float x, float y, float z, int id){
@@ -5,4 +7,8 @@ Player::Player(float x, float y, float z, int id){
 	this->x = x;
 	this->y = y;
 	this->z = z;
+}
+
+Player::Player(){
+this->id = -1;
 }

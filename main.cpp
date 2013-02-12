@@ -9,7 +9,7 @@
 
 using namespace std;
 
-Player *players[64];
+Player players[64];
 void handlePacket(string packetData);
 
 enum{
@@ -79,10 +79,12 @@ void handlePacket(string packetData){
 	
 	packetType = enumPacketType(packetTypeStr);
 
+	int debug;
 	switch(packetType){
 		case pLogin:
 			cout << "Login packet received" << endl;
-			login(*players);
+			login(players);
+			debug = 0;
 			break;
 
 		case pLogout:
