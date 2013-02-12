@@ -13,7 +13,7 @@ public:
 	int id;
 	ENetPeer *peer;
 
-	Player(float x, float y, float z, int id, ENetPeer peer);
+	Player(float x, float y, float z, int id, ENetPeer *peer);
 	Player();
 	void movePlayer(float x, float y, float z);
 };

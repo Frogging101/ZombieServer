@@ -5,7 +5,7 @@
 
 using namespace std;
 
-void login(ENetPeer peer){
+void login(ENetPeer *peer){
 	for(int i=0;i<MAXPLAYERS;i++){
 		if(players[i].id == -1){
 			players[i] = Player(0,0,0,i,peer);
@@ -36,7 +36,7 @@ void broadcast(string data, ENetPeer *exclude){
 	
 	for(int i=0;i<MAXPLAYERS;i++)
 	{
-		if(players[i].peer != exclude){
+		if(players[i].peer != exclude && players[i].id != -1){
 			enet_peer_send(players[i].peer,0,packet);
 		}
 	}

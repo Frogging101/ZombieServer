@@ -10,7 +10,7 @@ using namespace std;
 
 void handlePacket(string packetData, ENetPeer *peer);
 int peerToId(ENetPeer *peer);
-Player *players = new Player[MAXPLAYERS];
+Player players[MAXPLAYERS];
 ENetHost *server;
 
 enum{
@@ -20,6 +20,9 @@ enum{
 };
 
 int main(int argc, char **argv){
+	for(int i=0;i<MAXPLAYERS;i++)
+		players[i] = Player();
+
 	ENetAddress address;
 
 	if (enet_initialize () != 0)
@@ -30,7 +33,7 @@ int main(int argc, char **argv){
 	atexit (enet_deinitialize);
 
 	address.host = ENET_HOST_ANY;
-	address.port = 340;
+	address.port = 1255;
 
 	server = enet_host_create(&address,10,2,0,0);
 
@@ -82,7 +85,7 @@ void handlePacket(string packetData, ENetPeer *peer){
 	switch(packetType){
 		case pLogin:
 			cout << "Login packet received" << endl;
-			login(*peer);
+			login(peer);
 			break;
 
 		case pLogout:

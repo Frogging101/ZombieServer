@@ -7,11 +7,12 @@
 
 using namespace std;
 
-Player::Player(float x, float y, float z, int id, ENetPeer peer){
+Player::Player(float x, float y, float z, int id, ENetPeer *peer){
 	this->id = id;
 	this->x = x;
 	this->y = y;
 	this->z = z;
+	this->peer = peer;
 }
 
 Player::Player(){

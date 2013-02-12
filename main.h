@@ -2,7 +2,7 @@
 #define MAIN_H
 
 #define MAXPLAYERS 64
-extern Player *players;
+extern Player players[MAXPLAYERS];
 extern ENetHost *server;
 
 #endif
