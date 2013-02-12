@@ -2,11 +2,23 @@
 
 #include <enet/enet.h>
 #include <iostream>
+#include <sstream>
+
+#include "Player.h";
+#include "PacketHandling.h"
 
 using namespace std;
 
-int main(int argc, char **argv)
-{
+Player *players[64];
+void handlePacket(string packetData);
+
+enum{
+	pLogin,
+	pLogout,
+	pMove
+};
+
+int main(int argc, char **argv){
 	ENetAddress address;
 	ENetHost *server;
 
@@ -31,35 +43,15 @@ int main(int argc, char **argv)
 	ENetEvent event;
 
 	while(true){
-
-		/* Wait up to 1000 milliseconds for an event. */
 		while (enet_host_service (server, &event, 1000) > 0)
 		{
 			switch (event.type)
 			{
 			case ENET_EVENT_TYPE_CONNECT:
-				printf ("A new client connected from %x:%u.\n", 
-						event.peer -> address.host,
-						event.peer -> address.port);
-				/* Store any relevant client information here. */
-				event.peer -> data = "Client information";
+				handlePacket("login");
 				break;
 			case ENET_EVENT_TYPE_RECEIVE:
-				printf ("A packet of length %u containing %s was received from %s on channel %u.\n",
-						event.packet -> dataLength,
-						event.packet -> data,
-						event.peer -> data,
-						event.channelID);
-
-				for(int i=0;i<server->peerCount;i++)
-				{
-					if(&server->peers[i] != event.peer)
-					{
-						enet_peer_send(&server->peers[i],0,event.packet);
-						enet_host_flush(server);
-					}
-				}
-
+				handlePacket((char*)event.packet->data);
 				break;
 	   
 			case ENET_EVENT_TYPE_DISCONNECT:
@@ -68,5 +60,37 @@ int main(int argc, char **argv)
 				event.peer -> data = NULL;
 			}
 		}
+	}
+}
+
+int enumPacketType(string text){ //text is the packet type text{
+	if(text == "login") return pLogin;
+	if(text == "logout") return pLogout;
+	if(text == "move") return pMove;
+}
+
+void handlePacket(string packetData){
+	stringstream ss;
+	string packetTypeStr;
+	int packetType;	
+
+	ss << packetData; //Store the whole packetData in ss
+	ss >> packetTypeStr;
+	
+	packetType = enumPacketType(packetTypeStr);
+
+	switch(packetType){
+		case pLogin:
+			cout << "Login packet received" << endl;
+			login(*players);
+			break;
+
+		case pLogout:
+			//logout
+			break;
+
+		case pMove:
+			//move
+			break;
 	}
 }
