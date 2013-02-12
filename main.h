@@ -2,6 +2,6 @@
 #define MAIN_H
 
 #define MAXPLAYERS 64
-Player players[MAXPLAYERS];
+extern Player players[MAXPLAYERS];
 
 #endif
