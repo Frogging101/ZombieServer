@@ -2,7 +2,7 @@
 #include <iostream>
 #include <sstream>
 
-#include "Player.h";
+#include "Player.h"
 #include "PacketHandling.h"
 #include "main.h"
 
