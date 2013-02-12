@@ -1,7 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "enet\enet.h"
+#include <enet/enet.h>
 
 class Player
 {
