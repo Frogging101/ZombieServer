@@ -18,9 +18,10 @@ void login(ENetPeer peer){
 					ENetPacket *spawnPacket = enet_packet_create(packetData.str().c_str(),
 							packetData.str().length()+1,ENET_PACKET_FLAG_RELIABLE);
 
-					enet_peer_send(players[j].peer,0,spawnPacket); 
+					enet_peer_send(players[i].peer,0,spawnPacket); 
 				}
 			}
+			break;
 		}
 	}
 }
