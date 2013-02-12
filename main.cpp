@@ -4,11 +4,12 @@
 
 #include "Player.h";
 #include "PacketHandling.h"
+#include "main.h"
 
 using namespace std;
 
-Player players[64];
-void handlePacket(string packetData, ENetPeer peer);
+void handlePacket(string packetData, ENetPeer *peer);
+int peerToId(ENetPeer *peer);
 
 enum{
 	pLogin,
@@ -46,15 +47,15 @@ int main(int argc, char **argv){
 			switch (event.type)
 			{
 			case ENET_EVENT_TYPE_CONNECT:
-				handlePacket("login",*event.peer);
+				handlePacket("login",event.peer);
 				break;
 			case ENET_EVENT_TYPE_RECEIVE:
-				handlePacket((char*)event.packet->data,*event.peer);
+				handlePacket((char*)event.packet->data,event.peer);
 				break;
 	   
 			case ENET_EVENT_TYPE_DISCONNECT:
 				printf ("%s disconected.\n", event.peer -> data);
-				handlePacket("logout",*event.peer);
+				handlePacket("logout",event.peer);
 			}
 		}
 	}
@@ -66,7 +67,7 @@ int enumPacketType(string text){ //text is the packet type text{
 	if(text == "move") return pMove;
 }
 
-void handlePacket(string packetData, ENetPeer peer){
+void handlePacket(string packetData, ENetPeer *peer){
 	stringstream ss;
 	string packetTypeStr;
 	int packetType;	
@@ -79,7 +80,7 @@ void handlePacket(string packetData, ENetPeer peer){
 	switch(packetType){
 		case pLogin:
 			cout << "Login packet received" << endl;
-			login(players,peer);
+			login(*peer);
 			break;
 
 		case pLogout:
@@ -87,7 +88,22 @@ void handlePacket(string packetData, ENetPeer peer){
 			break;
 
 		case pMove:
-			//move
+			float x;
+			float y;
+			float z;
+			float yaw;
+
+			ss >> x >> y >> z >> yaw;
+			players[peerToId(peer)].movePlayer(x,y,z);
+
 			break;
 	}
+}
+
+int peerToId(ENetPeer *peer){
+	for(int i=0;i<MAXPLAYERS;i++){
+		if(peer == players[i].peer)
+			return players[i].id;
+	}
+	return -1;
 }

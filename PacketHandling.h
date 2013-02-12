@@ -3,8 +3,8 @@
 
 #include "Player.h"
 
-void login(Player players[],ENetPeer peer);
-void logout(Player players);
+void login(ENetPeer peer);
+void logout();
 void move();
 
 #endif

@@ -11,10 +11,11 @@ public:
 	float z;
 	float yaw;
 	int id;
-	ENetPeer peer;
+	ENetPeer *peer;
 
 	Player::Player(float x, float y, float z, int id, ENetPeer peer);
 	Player::Player();
+	void Player::movePlayer(float x, float y, float z);
 };
 
 #endif

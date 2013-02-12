@@ -69,6 +69,7 @@
     <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="main.h" />
     <ClInclude Include="PacketHandling.h" />
     <ClInclude Include="Player.h" />
   </ItemGroup>
