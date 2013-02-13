@@ -46,7 +46,7 @@ int main(int argc, char **argv){
 	ENetEvent event;
 
 	while(true){
-		while (enet_host_service (server, &event, 1000) > 0)
+		while (enet_host_service (server, &event, 1) > 0)
 		{
 			switch (event.type)
 			{
@@ -98,7 +98,8 @@ void handlePacket(string packetData, ENetPeer *peer){
 			float yaw;
 
 			ss >> x >> y >> z >> yaw;
-			players[peerToId(peer)].movePlayer(x,y,z);
+			cout << "Moving " << players[peerToId(peer)].peer->address.host << endl;
+			players[peerToId(peer)].movePlayer(x,y,z,yaw);
 
 			break;
 	}

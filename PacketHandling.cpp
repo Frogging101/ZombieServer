@@ -10,8 +10,7 @@ void login(ENetPeer *peer){
 	for(int i=0;i<MAXPLAYERS;i++){
 		if(players[i].id == -1){
 			cout << "Connecting client with id " << i << endl;
-			players[i] = Player(0,0,0,i,peer); 
-			//packetData << "spawn " << i << 
+			players[i] = Player(0,0,0,0,i,peer); 
 			stringstream ss;
 			ss << "spawn " << players[i].id << " 0 0 0 0";
 			broadcast(ss.str(),players[i].peer);
