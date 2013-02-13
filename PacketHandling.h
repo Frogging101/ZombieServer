@@ -5,9 +5,9 @@
 
 #include "Player.h"
 
+void broadcast(std::string data, ENetPeer *exclude);
 void login(ENetPeer *peer);
 void logout();
 void move();
-void broadcast(std::string data, ENetPeer *exclude);
 
 #endif

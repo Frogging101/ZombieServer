@@ -63,7 +63,6 @@ int main(int argc, char **argv){
 			}
 		}
 	}
-	delete[] players;
 }
 
 int enumPacketType(string text){ //text is the packet type text{
